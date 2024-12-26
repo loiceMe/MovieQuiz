@@ -47,20 +47,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		611342392B701CF6003FC2A4 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		6113423A2B701CF8003FC2A4 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		8F4738322848DE2A005DF65E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,7 +61,6 @@
 			children = (
 				B3DB677B2D11DE6A00555A4B /* YS Display-Medium.ttf */,
 				B3DB677D2D11DE7400555A4B /* YS Display-Bold.ttf */,
-				B3DB677F2D11DE8C00555A4B /* Fonts */,
 				AD1ABABC2831907F00B3E448 /* LaunchScreen.storyboard */,
 				AD1ABABA2831907F00B3E448 /* Assets.xcassets */,
 				AD1ABABF2831907F00B3E448 /* Info.plist */,
@@ -105,10 +90,8 @@
 				AD1ABAB12831907B00B3E448 /* AppDelegate.swift */,
 				AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */,
 				ADF0CF75283FDAA10075F54D /* Helpers */,
-				611342392B701CF6003FC2A4 /* Models */,
 				8F4738322848DE2A005DF65E /* Presentation */,
 				8F4738332848DE46005DF65E /* Resources */,
-				6113423A2B701CF8003FC2A4 /* Services */,
 			);
 			path = MovieQuiz;
 			sourceTree = "<group>";
@@ -121,21 +104,6 @@
 				AD77F5732857F8810062FB14 /* Date+Extensions.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		B3DB677F2D11DE8C00555A4B /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				B3DB67802D11DF3200555A4B /* YS Display */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
-		B3DB67802D11DF3200555A4B /* YS Display */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "YS Display";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

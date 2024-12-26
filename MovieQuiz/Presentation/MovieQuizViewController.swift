@@ -119,4 +119,3 @@ fileprivate let mockQuestions = [
     QuizQuestion(image: "Tesla", correctAnswer: false),
     QuizQuestion(image: "Vivarium", correctAnswer: false)
 ]
-
