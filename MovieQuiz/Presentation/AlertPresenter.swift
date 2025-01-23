@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class AlertPresenter {
+final class AlertPresenter {
     weak var controller: UIViewController?
     
     func showAlert(alertData: AlertModel) {

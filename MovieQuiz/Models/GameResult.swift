@@ -11,7 +11,11 @@ struct GameResult: Codable {
     let total: Int
     let date: Date
     var accuracy: Double {
-        get { Double(correct) / Double(total) * 100 }
+        get {
+            guard total != 0 else { return 0 }
+            
+            return Double(correct) / Double(total) * 100
+        }
     }
     
     func betterThan(anotherResult: GameResult) -> Bool {
