@@ -4,22 +4,22 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var questionCounterLabel: UILabel!
     @IBOutlet private weak var posterImageView: UIImageView!
     @IBOutlet private weak var questionTextLabel: UILabel!
-    
-    private var currentQuestionNumber: Int = 1
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    private var currentQuestionNumber: Int = 0
     private var correctAnswers: Int = .zero
     
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol = QuestionFactory()
     private var currentQuestion: QuizQuestion?
-    private var statisticService: StatisticService = StatisticServiceImplementation()
-    
+    private var statisticService: StatisticServiceProtocol = StatisticServiceImplementation()
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         questionFactory.delegate = self
-        questionFactory.requestNextQuestion()
+        showLoadingIndicator()
+        questionFactory.loadData()
     }
     
     // MARK: - Actions
@@ -34,9 +34,9 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Private functions
     
-    private func convert(model: QuizQuestion?) -> QuizStepViewModel {
-        return QuizStepViewModel(image: UIImage(named: model?.image ?? "") ?? UIImage(),
-                                 question: model?.text ?? "",
+    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+        return QuizStepViewModel(image: UIImage(data: model.image) ?? UIImage(),
+                                 question: model.text,
                                  questionNumber: "\(currentQuestionNumber)/\(questionsAmount)")
     }
     
@@ -82,12 +82,27 @@ final class MovieQuizViewController: UIViewController {
                                                        completion: completion))
     }
     
+    private func showLoadError(error: Error) {
+        let completion = { [weak self] in
+            guard let self = self else { return }
+            showLoadingIndicator()
+            questionFactory.loadData()
+        }
+        let alertPresenter = AlertPresenter()
+        alertPresenter.controller = self
+        
+        alertPresenter.showAlert(alertData: AlertModel(title: "Ошибка",
+                                                       message: error.localizedDescription,
+                                                       buttonText: "Повторить?",
+                                                       completion: completion))
+    }
+    
     private func showNextQuestionOrResults() {
         let formatter = DateFormatter()
-        
+        currentQuestionNumber += 1
         formatter.dateFormat = "dd.MM.yyyy HH:mm"
         
-        if currentQuestionNumber == questionsAmount {
+        if currentQuestionNumber == questionsAmount + 1 {
             statisticService.store(GameResult(correct: correctAnswers,
                                               total: questionsAmount,
                                               date: Date.now))
@@ -101,14 +116,35 @@ final class MovieQuizViewController: UIViewController {
                                             text: textResult,
                                             buttonText: "Сыграть еще раз"))
         } else {
-            currentQuestionNumber += 1
             questionFactory.requestNextQuestion()
-            show(quiz: convert(model: currentQuestion))
+            if let currentQuestion = self.currentQuestion {
+                show(quiz: convert(model: currentQuestion))
+            }
         }
+    }
+    
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
 }
 
 extension MovieQuizViewController: QuestionFactoryDelegate {
+    func didLoadDataFromServer() {
+        hideLoadingIndicator()
+        showNextQuestionOrResults()
+    }
+    
+    func didFailToLoadData(with error: any Error) {
+        hideLoadingIndicator()
+        showLoadError(error: error)
+    }
+    
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return

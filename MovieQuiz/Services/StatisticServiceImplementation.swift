@@ -1,12 +1,12 @@
 //
-//  StatisticService.swift
+//  StatisticServiceImplementation.swift
 //  MovieQuiz
 //
 //  Created by   Дмитрий Кривенко on 21.01.2025.
 //
 import Foundation
 
-final class StatisticServiceImplementation: StatisticService {
+final class StatisticServiceImplementation: StatisticServiceProtocol {
     var gamesCount: Int {
         get { storage.integer(forKey: Keys.gamesCount.rawValue) }
         set { storage.set(newValue, forKey: Keys.gamesCount.rawValue) }
