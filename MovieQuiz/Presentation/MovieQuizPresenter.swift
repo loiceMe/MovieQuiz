@@ -34,7 +34,7 @@ final class MovieQuizPresenter: MovieQuizPresenterProtocol {
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.viewController?.unblockUI()
             self.showNextQuestionOrResults()
         }
@@ -68,7 +68,7 @@ final class MovieQuizPresenter: MovieQuizPresenterProtocol {
     
     private func show(quiz result: QuizResultsViewModel) {
         let completion = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             correctAnswers = 0
             currentQuestionNumber = 1
             questionFactory.requestNextQuestion()
@@ -82,7 +82,7 @@ final class MovieQuizPresenter: MovieQuizPresenterProtocol {
     
     private func showLoadError(error: Error) {
         let completion = { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             viewController?.showLoadingIndicator()
             questionFactory.loadData()
         }

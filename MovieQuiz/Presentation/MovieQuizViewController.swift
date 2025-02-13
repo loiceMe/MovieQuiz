@@ -6,7 +6,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet private weak var questionTextLabel: UILabel!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
 
-    private var presenter: MovieQuizPresenterProtocol? = nil
+    private var presenter: MovieQuizPresenterProtocol?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {

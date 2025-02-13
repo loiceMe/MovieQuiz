@@ -7,17 +7,6 @@
 import XCTest
 @testable import MovieQuiz
 
-final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
-    func show(quiz step: QuizStepViewModel?) {}
-    func blockUI() {}
-    func unblockUI() {}
-    func show(quiz result: QuizResultsViewModel) {}
-    func highlightImageBorder(isCorrectAnswer: Bool) {}
-    func showLoadingIndicator() {}
-    func hideLoadingIndicator() {}
-    func showAlert(model: AlertModel) {}
-}
-
 final class MovieQuizPresenterTests: XCTestCase {
     func testPresenterConvertModel() throws {
         let viewControllerMock = MovieQuizViewControllerMock()
