@@ -7,27 +7,15 @@
 import Foundation
 
 final class QuestionFactory: QuestionFactoryProtocol {
-//    private let questions: [QuizQuestion] = [
-//        QuizQuestion(image: "The Godfather", correctAnswer: true),
-//        QuizQuestion(image: "The Dark Knight", correctAnswer: true),
-//        QuizQuestion(image: "Kill Bill", correctAnswer: true),
-//        QuizQuestion(image: "The Avengers", correctAnswer: true),
-//        QuizQuestion(image: "Deadpool", correctAnswer: true),
-//        QuizQuestion(image: "The Green Knight", correctAnswer: true),
-//        QuizQuestion(image: "Old", correctAnswer: false),
-//        QuizQuestion(image: "The Ice Age Adventures of Buck Wild", correctAnswer: false),
-//        QuizQuestion(image: "Tesla", correctAnswer: false),
-//        QuizQuestion(image: "Vivarium", correctAnswer: false)
-//    ]
     private var movies: [MostPopularMovie] = []
     weak var delegate: QuestionFactoryDelegate?
     private let moviesLoader: MoviesLoading = MoviesLoader()
     
     func loadData() {
         moviesLoader.loadMovies { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch result {
                 case .success(let mostPopularMovies):
                     self.movies = mostPopularMovies.items
@@ -41,7 +29,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
     
     func requestNextQuestion() {
         DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let index = (0..<self.movies.count).randomElement() ?? 0
             
             guard let movie = self.movies[safe: index] else { return }
@@ -65,7 +53,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
                                          correctAnswer: correctAnswer)
             
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.delegate?.didReceiveNextQuestion(question: question)
             }
         }
